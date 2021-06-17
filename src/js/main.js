@@ -49,7 +49,7 @@ console.log(listList(list));
 function setList(params) {
   let table = `<thead><tr><td>Description</td><td>Amount</td><td>Value</td><td>Action</td></tr></thead><tbody>`;
   for (let i in params) {
-    table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${params[i].amount}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-default" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-default" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
+    table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${formatAmount(params[i].amount)}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-default" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-default" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
   };
   document.getElementById("listTable").innerHTML = table;
 };
@@ -75,10 +75,25 @@ function formatValue(value) {
   return str;
 };
 
+/**
+ * Format Value in BR
+ */
+function formatAmount(amount) {
+  return parseInt(amount);
+};
+
+/**
+ * CRUD
+ */
+
 function addData() {
   let desc = document.getElementById("desc").value;
   let amount = document.getElementById("amount").value;
   let value = document.getElementById("value").value;
+
+  if (!validation()) {
+    return;
+  }
 
   list.unshift({ "desc": desc, "amount": amount, "value": value });
   setList(list);
@@ -103,6 +118,7 @@ function resetForm() {
   document.getElementById("btnAdd").style.display = "inline-block";
 
   document.getElementById("inputIdUpdate").innerHTML = "";
+  document.getElementById("error").style.display = "none";
 };
 
 function updateData() {
@@ -110,6 +126,10 @@ function updateData() {
   let desc = document.getElementById("desc").value;
   let amount = document.getElementById("amount").value;
   let value = document.getElementById("value").value;
+
+  if (!validation()) {
+    return;
+  }
 
   list[id] = { "desc": desc, "amount": amount, "value": value };
 
@@ -128,6 +148,46 @@ function deleteData(id) {
       let arrAuxend = list.slice(id + 1);
       list = arrAuxIni.concat(arrAuxend);
     }
+
     setList(list);
   };
+};
+
+function validation() {
+  let desc = document.getElementById("desc").value;
+  let amount = document.getElementById("amount").value;
+  let value = document.getElementById("value").value;
+  let error = "";
+
+  document.getElementById("error").style.display = "none";
+
+  if (desc === "") {
+    error += `<p>Fill out description</p>`;
+  }
+
+  if (amount === "") {
+    error += `<p>Fill out a quantity</p>`;
+  } else if (amount != parseInt(amount)) {
+    error += `<p>Fill out a valid amount</p>`;
+  };
+
+  if (value === "") {
+    error += `<p>Fill out a value</p>`;
+  } else if (value != parseFloat(value)) {
+    error += `<p>Fill out a valid value</p>`;
+  };
+
+  if (error != "") {
+    document.getElementById("error").style.display = "block";
+    document.getElementById("error").style.backgroundColor = "rgba(85, 85, 85, 0.5)";
+    document.getElementById("error").style.color = "white";
+    document.getElementById("error").style.padding = "10px";
+    document.getElementById("error").style.margin = "10px";
+    document.getElementById("error").style.borderRadius = "15px";
+
+    document.getElementById("error").innerHTML = `<h3>Error: ${error}</h3>`;
+    return 0;
+  } else {
+    return 1;
+  }
 };
