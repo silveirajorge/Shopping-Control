@@ -19,7 +19,7 @@ let list = [
 /**
  * Get List
  */
-function getTotal(param) {
+/* function getTotal(param) {
   let total = 0;
   for (let key in param) {
     total += param[key].value * param[key].amount;
@@ -27,7 +27,7 @@ function getTotal(param) {
   return total;
 };
 
-console.log(getTotal(list));
+console.log(getTotal(list)); */
 
 /**
  * Também poderia ser feito dessa forma
@@ -38,10 +38,9 @@ function listList(a) {
     total += i[1].value * i[1].amount;
     // console.log(i)
   }
-  return total;
+  document.getElementById("totalValue").innerHTML = formatValue(total);
+  // return total;
 };
-
-console.log(listList(list));
 
 /**
  * Set List on HTML
@@ -52,6 +51,7 @@ function setList(params) {
     table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${formatAmount(params[i].amount)}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-default" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-default" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
   };
   document.getElementById("listTable").innerHTML = table;
+  listList(list)
 };
 
 setList(list);
