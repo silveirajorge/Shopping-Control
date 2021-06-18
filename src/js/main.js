@@ -48,7 +48,7 @@ function listList(a) {
 function setList(params) {
   let table = `<thead><tr><td>Description</td><td>Amount</td><td>Value</td><td>Action</td></tr></thead><tbody>`;
   for (let i in params) {
-    table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${formatAmount(params[i].amount)}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-default" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-default" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
+    table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${formatAmount(params[i].amount)}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-info" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-danger" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
   };
   document.getElementById("listTable").innerHTML = table;
   listList(list)
@@ -189,5 +189,15 @@ function validation() {
     return 0;
   } else {
     return 1;
-  }
+  };
+};
+
+/**
+   * Delete All List
+   */
+function deleteList() {
+  if (confirm("Are you delete this list?")) {
+    list = [];
+    setList(list);
+  };
 };

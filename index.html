@@ -32,10 +32,15 @@
       <div class="form-group">
         <span id="btnUpdate" style="display: none">
           <span id="inputIdUpdate"></span>
-          <input onclick="updateData()" class="btn btn-default" type="button" value="Save">
-          <input onclick="resetForm()" class="btn btn-default" type="button" value="Cancel">
+          <button class="btn btn-default" onclick="updateData();">Save</button>
+          <button onclick=" resetForm()" class="btn btn-default">Cancel</button>
         </span>
-        <input id="btnAdd" onclick="addData()" class="btn btn-default" type="button" value="Add">
+        <span id="btnAdd">
+          <button class="btn btn-primary" onclick="addData();">Add</button>
+          <button class="btn btn-success" onclick="resetForm();">Reset</button>
+          <button class="btn btn-warning" onclick="deleteList();">Clean All</button>
+        </span>
+
       </div>
     </div>
 
