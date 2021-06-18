@@ -51,10 +51,11 @@ function setList(params) {
     table += `<tr><td>${formatDesc(params[i].desc)}</td><td>${formatAmount(params[i].amount)}</td><td>${formatValue(params[i].value)}</td><td><button class="btn btn-info" onclick="setUpdate(${i});">Edit</button> | <button class="btn btn-danger" onclick="deleteData(${i});">Delete</button></td></tr></tbody>`
   };
   document.getElementById("listTable").innerHTML = table;
-  listList(list)
+  listList(list);
+  saveListStorage(list);
 };
 
-setList(list);
+// setList(list);
 
 /**
  * Format Description to first letter Uppercase
@@ -201,3 +202,18 @@ function deleteList() {
     setList(list);
   };
 };
+
+function saveListStorage(list) {
+  let jsonStr = JSON.stringify(list);
+  localStorage.setItem("list", jsonStr);
+};
+
+function initListStorage() {
+  let testList = localStorage.getItem("list");
+  if (testList) {
+    list = JSON.parse(testList);
+  };
+  setList(list);
+};
+
+initListStorage();
